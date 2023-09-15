@@ -140,7 +140,13 @@ export class GraphQLFederationFactory {
 
     let executableSchema: GraphQLSchema = buildFederatedSchema({
       typeDefs: gql(typeDefs),
+      resolvers: undefined,
+    });
+
+    executableSchema = addResolversToSchema({
+      schema: executableSchema,
       resolvers: this.getResolvers(options.resolvers),
+      inheritResolversFromInterfaces: options.inheritResolversFromInterfaces,
     });
 
     executableSchema = this.overrideOrExtendResolvers(
